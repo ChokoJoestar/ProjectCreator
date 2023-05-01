@@ -7,7 +7,6 @@
    "author": "ChokoJoestar",
    "license": "MIT",
    "type": "module",
-   "private": false,
    "scripts": {
       "start": "yarn build && node .",
       "build": "npx tsc -p ./tsconfig.json"
