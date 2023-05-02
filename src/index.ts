@@ -6,7 +6,6 @@ import { mkdirSync } from "fs";
 import inquirer from "inquirer";
 
 console.clear();
-
 console.log(
    figlet.textSync("Project Creator", {
       horizontalLayout: "full",
@@ -15,6 +14,11 @@ console.log(
 
 inquirer
    .prompt([
+      {
+         type: "input",
+         name: "projectDir",
+         message: "What is your project name ?",
+      },
       {
          type: "input",
          name: "sourceDir",
@@ -28,17 +32,34 @@ inquirer
          choices: ["npm", "yarn"],
          default: "npm",
       },
+
    ])
    .then((responce: any) => {
-      // Create Source Dir
-      const sourceDir: string = responce.sourceDir
-      mkdirSync(sourceDir);
+      const projectDir: string = responce.projectDir;
+      const sourceDir: string = responce.sourceDir;
+      const packageInstaller: string = responce.YarnOrNpm;
+      const installTypescript: boolean = responce.installTypescript;
+      const dirToCmd: string = "../cmd";
+
+      // Create Project
+      mkdirSync(projectDir);
+      mkdirSync(`${projectDir}/${sourceDir}`);
 
       // Init Package Installer
-      const packageInstaller: string = responce.YarnOrNpm;
+      const cmdPackageInstaller = `${dirToCmd}/packageInstller`;
       if (packageInstaller === "npm") {
-         exec("npm init")
-      } else if (packageInstaller === "yarn"){
-         exec("yarn")
+         executeShell(cmdPackageInstaller, "npm");
+      } else if (packageInstaller === "yarn") {
+         executeShell(cmdPackageInstaller, "yarn");
       }
+
+
    });
+
+const executeShell = (dir: string, program: string) => {
+   if (process.platform === "win32") {
+      exec(`"${dir}/${program}.bat"`);
+   } else if (process.platform === "linux") {
+      exec(`"${dir}/${program}.sh"`);
+   }
+};
