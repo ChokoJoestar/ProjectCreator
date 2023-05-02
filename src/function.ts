@@ -42,7 +42,7 @@ export const executeShell = (
    let cmd = "";
    if (process.platform === "win32") {
       cmd = `cd /d ${projectDir} && "${dir}/${program}.bat"`;
-   } else if (process.platform === "linux") {
+   } else if (process.platform === "linux" || process.platform === "darwin") {
       cmd = `cd ${projectDir} && "${dir}/${program}.sh"`;
    } else {
       console.error("Unsupported platform:", process.platform);
@@ -55,9 +55,6 @@ export const executeShell = (
          console.error("Command failed:", error);
          console.error("stderr:", stderr);
          process.exit(1);
-      } else {
-         console.log("Command successful!");
-         console.log("stdout:", stdout);
       }
    });
 };
