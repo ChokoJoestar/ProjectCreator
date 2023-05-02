@@ -32,7 +32,12 @@ inquirer
          choices: ["npm", "yarn"],
          default: "npm",
       },
-
+      {
+         type: "confirm",
+         name: "installTypescript",
+         message: "Do you want to install typescript ?",
+         default: true,
+      },
    ])
    .then((responce: any) => {
       const projectDir: string = responce.projectDir;
@@ -53,7 +58,15 @@ inquirer
          executeShell(cmdPackageInstaller, "yarn");
       }
 
-
+      // Install Typescript
+      const cmdInstallTypescript = `${dirToCmd}/installTypescript`;
+      if (installTypescript) {
+         if (packageInstaller === "npm") {
+            executeShell(cmdPackageInstaller, "typescriptWithNpm");
+         } else if (packageInstaller === "yarn") {
+            executeShell(cmdInstallTypescript, "typescriptWithYarn");
+         }
+      }
    });
 
 const executeShell = (dir: string, program: string) => {
