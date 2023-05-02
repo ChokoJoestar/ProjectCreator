@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { exec } from "child_process";
 import figlet from "figlet";
 import { mkdirSync } from "fs";
@@ -37,6 +39,6 @@ inquirer
       if (packageInstaller === "npm") {
          exec("npm init")
       } else if (packageInstaller === "yarn"){
-         exec("yarn init")
+         exec("yarn")
       }
    });
