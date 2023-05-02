@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
-import { exec } from "child_process";
 import figlet from "figlet";
-import { mkdirSync } from "fs";
 import inquirer from "inquirer";
+import {
+   createProject,
+   initPackageInstaller,
+   initTypescript,
+} from "./function.js";
 
 console.clear();
 console.log(
@@ -27,7 +30,7 @@ inquirer
       },
       {
          type: "list",
-         name: "YarnOrNpm",
+         name: "yarnOrNpm",
          message: "Choise your package installer:",
          choices: ["npm", "yarn"],
          default: "npm",
@@ -39,40 +42,13 @@ inquirer
          default: true,
       },
    ])
-   .then((responce: any) => {
+   .then(async (responce: any) => {
       const projectDir: string = responce.projectDir;
       const sourceDir: string = responce.sourceDir;
-      const packageInstaller: string = responce.YarnOrNpm;
+      const packageInstaller: string = responce.yarnOrNpm;
       const installTypescript: boolean = responce.installTypescript;
-      const dirToCmd: string = "../cmd";
 
-      // Create Project
-      mkdirSync(projectDir);
-      mkdirSync(`${projectDir}/${sourceDir}`);
-
-      // Init Package Installer
-      const cmdPackageInstaller = `${dirToCmd}/packageInstller`;
-      if (packageInstaller === "npm") {
-         executeShell(cmdPackageInstaller, "npm");
-      } else if (packageInstaller === "yarn") {
-         executeShell(cmdPackageInstaller, "yarn");
-      }
-
-      // Install Typescript
-      const cmdInstallTypescript = `${dirToCmd}/installTypescript`;
-      if (installTypescript) {
-         if (packageInstaller === "npm") {
-            executeShell(cmdPackageInstaller, "typescriptWithNpm");
-         } else if (packageInstaller === "yarn") {
-            executeShell(cmdInstallTypescript, "typescriptWithYarn");
-         }
-      }
+      createProject(projectDir, sourceDir);
+      initPackageInstaller(packageInstaller, projectDir);
+      initTypescript(installTypescript, packageInstaller, projectDir);
    });
-
-const executeShell = (dir: string, program: string) => {
-   if (process.platform === "win32") {
-      exec(`"${dir}/${program}.bat"`);
-   } else if (process.platform === "linux") {
-      exec(`"${dir}/${program}.sh"`);
-   }
-};

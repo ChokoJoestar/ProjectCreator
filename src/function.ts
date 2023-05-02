@@ -1,0 +1,63 @@
+import { exec } from "child_process";
+import { mkdirSync } from "fs";
+const dirToCmd: string = "../data";
+
+export const createProject = (projectDir: string, sourceDir: string) => {
+   mkdirSync(projectDir);
+   mkdirSync(`${projectDir}/${sourceDir}`);
+};
+
+export const initPackageInstaller = (
+   packageInstaller: string,
+   projectDir: string
+) => {
+   const cmdPackageInstaller = `${dirToCmd}/packageInstaller`;
+   if (packageInstaller === "npm") {
+      executeShell(cmdPackageInstaller, "npm", projectDir);
+   } else if (packageInstaller === "yarn") {
+      executeShell(cmdPackageInstaller, "yarn", projectDir);
+   }
+};
+
+export const initTypescript = (
+   installTypescript: boolean,
+   packageInstaller: string,
+   projectDir: string
+) => {
+   const cmdInstallTypescript = `${dirToCmd}/installTypescript`;
+   if (installTypescript) {
+      if (packageInstaller === "npm") {
+         executeShell(cmdInstallTypescript, "typescriptWithNpm", projectDir);
+      } else if (packageInstaller === "yarn") {
+         executeShell(cmdInstallTypescript, "typescriptWithYarn", projectDir);
+      }
+   }
+};
+
+export const executeShell = (
+   dir: string,
+   program: string,
+   projectDir: string
+) => {
+   let cmd = "";
+   if (process.platform === "win32") {
+      cmd = `cd /d ${projectDir} && "${dir}/${program}.bat"`;
+   } else if (process.platform === "linux") {
+      cmd = `cd ${projectDir} && "${dir}/${program}.sh"`;
+   } else {
+      console.error("Unsupported platform:", process.platform);
+      process.exit(1);
+   }
+
+   console.log("Executing command:", cmd);
+   exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+         console.error("Command failed:", error);
+         console.error("stderr:", stderr);
+         process.exit(1);
+      } else {
+         console.log("Command successful!");
+         console.log("stdout:", stdout);
+      }
+   });
+};
