@@ -88,4 +88,7 @@ inquirer
       createProject(projectDir, sourceDir);
       initPackageInstaller(packageInstaller, projectDir);
       initTypescript(installTypescript, packageInstaller, projectDir);
+   })
+   .catch((error) => {
+      console.error(chalk.red(error));
    });
