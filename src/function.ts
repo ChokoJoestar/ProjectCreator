@@ -49,7 +49,6 @@ export const executeShell = (
       process.exit(1);
    }
 
-   console.log("Executing command:", cmd);
    exec(cmd, (error, stdout, stderr) => {
       if (error) {
          console.error("Command failed:", error);
