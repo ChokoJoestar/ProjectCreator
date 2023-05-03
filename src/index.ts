@@ -43,6 +43,17 @@ inquirer
       },
       {
          type: "input",
+         name: "projectDescription",
+         message: "What is your project description ?",
+         transformer(input, answers, flags) {
+            return chalk.blue(input);
+         },
+         validate(input, answers) {
+            return chalk.green(input);
+         },
+      },
+      {
+         type: "input",
          name: "sourceDir",
          message: "Entre your source dir:",
          default: "src",
@@ -81,6 +92,8 @@ inquirer
    ])
    .then(async (responce: any) => {
       const projectDir: string = responce.projectDir;
+      const projectVersion: string = responce.projectVersion;
+      const projectDescription: string = responce.projectDescription;
       const sourceDir: string = responce.sourceDir;
       const packageInstaller: string = responce.yarnOrNpm;
       const installTypescript: boolean = responce.installTypescript;
