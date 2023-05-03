@@ -6,6 +6,7 @@ import {
    createProject,
    initPackageInstaller,
    initTypescript,
+   writePackageJson,
 } from "./function.js";
 import chalk from "chalk";
 
@@ -99,6 +100,7 @@ inquirer
       const installTypescript: boolean = responce.installTypescript;
 
       createProject(projectDir, sourceDir);
+      writePackageJson(projectDir, projectVersion, projectDescription);
       initPackageInstaller(packageInstaller, projectDir);
       initTypescript(installTypescript, packageInstaller, projectDir);
    })

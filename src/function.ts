@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { mkdirSync } from "fs";
+import { mkdirSync, writeFileSync } from "fs";
 const dirToCmd: string = "../data";
 
 export const createProject = (projectDir: string, sourceDir: string) => {
@@ -32,6 +32,28 @@ export const initTypescript = (
          executeShell(cmdInstallTypescript, "typescriptWithYarn", projectDir);
       }
    }
+};
+
+export const writePackageJson = (
+   projectDir: string,
+   projectVerison: string,
+   projectDescription: string,
+) => {
+   const packageJson = `${projectDir}/package.json`;
+   const packageJsonContent = `
+   {
+      "name": "${projectDir.toLowerCase()}",
+      "description": "${projectDescription}",
+      "version": "${projectVerison}",
+      "main": "index.js"
+      "license": "MIT"
+      "scripts": {
+         "start": "node ."
+      },
+      "dependencies": {},
+      "devDependencies": {}
+   }`;
+   writeFileSync(packageJson, packageJsonContent);
 };
 
 export const executeShell = (
