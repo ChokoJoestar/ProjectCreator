@@ -25,6 +25,9 @@ inquirer
          transformer(input, answers, flags) {
             return chalk.blue(input);
          },
+         validate(input, answers) {
+            return chalk.green(input);
+         },
       },
       {
          type: "input",
@@ -34,6 +37,9 @@ inquirer
          transformer(input, answers, flags) {
             return chalk.blue(input);
          },
+         validate(input, answers) {
+            return chalk.green(input);
+         },
       },
       {
          type: "input",
@@ -42,6 +48,9 @@ inquirer
          default: "src",
          transformer(input, answers, flags) {
             return chalk.blue(input);
+         },
+         validate(input, answers) {
+            return chalk.green(input);
          },
       },
       {
@@ -53,6 +62,9 @@ inquirer
          transformer(input, answers, flags) {
             return chalk.blue(input);
          },
+         validate(input, answers) {
+            return chalk.green(input);
+         },
       },
       {
          type: "confirm",
@@ -61,6 +73,9 @@ inquirer
          default: true,
          transformer(input, answers, flags) {
             return chalk.blue(input);
+         },
+         validate(input, answers) {
+            return chalk.green(input);
          },
       },
    ])
