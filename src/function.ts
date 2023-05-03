@@ -45,8 +45,8 @@ export const writePackageJson = (
       "name": "${projectDir.toLowerCase()}",
       "description": "${projectDescription}",
       "version": "${projectVerison}",
-      "main": "index.js"
-      "license": "MIT"
+      "main": "index.js",
+      "license": "MIT",
       "scripts": {
          "start": "node ."
       },
