@@ -20,6 +20,7 @@
       "typescript": "^5.0.4"
    },
    "dependencies": {
+      "chalk": "^5.2.0",
       "figlet": "^1.6.0",
       "inquirer": "^9.2.0"
    },
