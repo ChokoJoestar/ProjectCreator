@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
-import figlet from "figlet";
+import chalk from "chalk";
 import inquirer from "inquirer";
+import figlet from "figlet";
 import {
    createProject,
    initPackageInstaller,
+   initTsConfig,
    initTypescript,
    writePackageJson,
 } from "./function.js";
-import chalk from "chalk";
 
 console.clear();
 console.log(
@@ -72,8 +73,20 @@ inquirer
             return chalk.blue(input);
          },
       },
+      {
+         type: "confirm",
+         name: "initTsConfig",
+         message: "Do you want to create a tsConfig file ?",
+         default: true,
+         transformer(input, answers, flags) {
+            return chalk.blue(input);
+         },
+         when(answers) {
+            return answers.installTypescript;
+         },
+      },
    ])
-   .then(async (responce: any) => {
+   .then((responce: any) => {
       const projectDir: string = responce.projectDir;
       const projectVersion: string = responce.projectVersion;
       const projectDescription: string = responce.projectDescription;
@@ -85,6 +98,7 @@ inquirer
       writePackageJson(projectDir, projectVersion, projectDescription);
       initPackageInstaller(packageInstaller, projectDir);
       initTypescript(installTypescript, packageInstaller, projectDir);
+      initTsConfig(projectDir, packageInstaller);
    })
    .catch((error) => {
       console.error(chalk.red(error));

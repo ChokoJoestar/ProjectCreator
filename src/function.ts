@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 import { mkdirSync, writeFileSync } from "fs";
-const dirToCmd: string = "../data";
+const dirToCmd: string = `../data`;
 
 export const createProject = (projectDir: string, sourceDir: string) => {
    mkdirSync(projectDir);
@@ -53,6 +53,19 @@ export const initTypescript = (
       } else if (packageInstaller === "yarn") {
          executeShell(cmdInstallTypescript, "typescriptWithYarn", projectDir);
       }
+   }
+};
+
+export const initTsConfig = (projectDir: string, packageInstaller: string) => {
+   const cmdInstallTypescript = `${dirToCmd}/installTypescript`;
+   const cmdInitTsConfig = `${dirToCmd}/initTsConfig`;
+
+   if (packageInstaller === "npm") {
+      executeShell(cmdInstallTypescript, "typescriptWithNpm", projectDir);
+      executeShell(cmdInitTsConfig, "init", projectDir);
+   } else if (packageInstaller === "yarn") {
+      executeShell(cmdInstallTypescript, "typescriptWithYarn", projectDir);
+      executeShell(cmdInitTsConfig, "init", projectDir);
    }
 };
 

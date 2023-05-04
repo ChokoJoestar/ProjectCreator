@@ -2,11 +2,10 @@
    "name": "@chokojoestar/project-creator",
    "version": "1.0.3",
    "description": "A script who create a project",
-   "main": "dist/index.js",
+   "main": "dist/index.mjs",
    "repository": "git+https://github.com/ChokoJoestar/ProjectCreator.git",
    "author": "ChokoJoestar",
    "license": "MIT",
-   "type": "module",
    "scripts": {
       "start": "yarn build && node .",
       "link": "yarn build && npm link @chokojoestar/project-creator",
@@ -25,7 +24,7 @@
       "inquirer": "^9.2.0"
    },
    "bin": {
-      "create-project": "dist/index.js"
+      "create-project": "dist/index.mjs"
    },
    "keywords": [
       "CLI"
