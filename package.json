@@ -1,6 +1,6 @@
 {
    "name": "@chokojoestar/project-creator",
-   "version": "1.0.3",
+   "version": "1.0.4",
    "description": "A script who create a project",
    "main": "dist/index.mjs",
    "repository": "git+https://github.com/ChokoJoestar/ProjectCreator.git",
